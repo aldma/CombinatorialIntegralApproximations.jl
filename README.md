@@ -1,2 +1,2 @@
-# jlcombina
-jlcombina - Solving binary approximation problems in Julia
+# Combina.jl
+Combina.jl - Solving binary approximation problems in Julia
