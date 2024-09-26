@@ -132,7 +132,7 @@ include("utils.jl")
         @test occursin("Built", status(s))
         @test isnothing(binapprox.b_bin)
         @test isnothing(binapprox.eta)
-        Combina.setup_sur!(s)
+        CombinatorialIntegralApproximations.setup_sur!(s)
         @test s.sur_status == 1
         @test occursin("Initialized", status(s))
         @test size(binapprox.b_bin, 1) == nt
