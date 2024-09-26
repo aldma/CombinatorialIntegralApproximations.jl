@@ -1,4 +1,4 @@
-using Combina
+using CombinatorialIntegralApproximations
 using Test
 
 @testset "Input test" begin

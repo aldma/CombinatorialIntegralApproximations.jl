@@ -1,4 +1,4 @@
-module Combina
+module CombinatorialIntegralApproximations
 
 using Logging
 

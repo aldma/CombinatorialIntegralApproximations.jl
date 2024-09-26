@@ -1,4 +1,4 @@
-using Combina
+using CombinatorialIntegralApproximations
 using Plots
 
 include("../test/utils.jl")
