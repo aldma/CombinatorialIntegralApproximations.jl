@@ -1,10 +1,9 @@
 module Combina
 
-# Write your package code here.
-export greet_your_package_name
+using Logging
 
-function greet_your_package_name()
-    return "Hello Combina!"
-end
+include("binary_approximation.jl")
+
+include("combina_sur.jl")
 
 end
