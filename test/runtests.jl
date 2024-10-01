@@ -128,12 +128,12 @@ include("utils.jl")
     binapprox = BinApprox(t, b_rel)
     @testset "SUR" begin
         s = CombinaSUR(binapprox)
-        @test s.sur_status == 0
+        @test s.solver_status == 0
         @test occursin("Built", status(s))
         @test isnothing(binapprox.b_bin)
         @test isnothing(binapprox.eta)
-        CombinatorialIntegralApproximations.setup_sur!(s)
-        @test s.sur_status == 1
+        CombinatorialIntegralApproximations.setup!(s)
+        @test s.solver_status == 1
         @test occursin("Initialized", status(s))
         @test size(binapprox.b_bin, 1) == nt
         @test size(binapprox.b_bin, 2) == nc
@@ -142,7 +142,7 @@ include("utils.jl")
         @test size(s.binapprox.b_bin, 2) == nc
         @test length(s.binapprox.eta) == 1
         solve!(s)
-        @test s.sur_status == 2
+        @test s.solver_status == 2
         @test occursin("Solution found", status(s))
         @test size(binapprox.b_bin, 1) == nt
         @test size(binapprox.b_bin, 2) == nc
