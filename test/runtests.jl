@@ -128,12 +128,12 @@ include("utils.jl")
     binapprox = BinApprox(t, b_rel)
     @testset "SUR" begin
         s = CombinaSUR(binapprox)
-        @test s.sur_status == 0
+        @test s.solver_status == 0
         @test occursin("Built", status(s))
         @test isnothing(binapprox.b_bin)
         @test isnothing(binapprox.eta)
-        CombinatorialIntegralApproximations.setup_sur!(s)
-        @test s.sur_status == 1
+        CombinatorialIntegralApproximations.setup!(s)
+        @test s.solver_status == 1
         @test occursin("Initialized", status(s))
         @test size(binapprox.b_bin, 1) == nt
         @test size(binapprox.b_bin, 2) == nc
@@ -142,7 +142,44 @@ include("utils.jl")
         @test size(s.binapprox.b_bin, 2) == nc
         @test length(s.binapprox.eta) == 1
         solve!(s)
-        @test s.sur_status == 2
+        @test s.solver_status == 2
+        @test occursin("Solution found", status(s))
+        @test size(binapprox.b_bin, 1) == nt
+        @test size(binapprox.b_bin, 2) == nc
+        @test length(binapprox.eta) == 1
+        @test size(s.binapprox.b_bin, 1) == nt
+        @test size(s.binapprox.b_bin, 2) == nc
+        @test length(s.binapprox.eta) == 1
+        # TODO check values too
+    end
+end
+
+@testset "CombinaMILP test" begin
+    b_rel_single = get_single_input()
+    nt = length(b_rel_single)
+    nc = 2
+    b_rel = zeros(nt, nc)
+    b_rel[:, 1] .= b_rel_single
+    b_rel[:, 2] .= 1 .- b_rel_single
+    t = collect(range(start = 0, stop = 240, length = nt + 1))
+    binapprox = BinApprox(t, b_rel)
+    @testset "MILP" begin
+        s = CombinaMILP(binapprox)
+        @test s.solver_status == 0
+        @test occursin("Built", status(s))
+        @test isnothing(binapprox.b_bin)
+        @test isnothing(binapprox.eta)
+        CombinatorialIntegralApproximations.setup!(s)
+        @test s.solver_status == 1
+        @test occursin("Initialized", status(s))
+        @test size(binapprox.b_bin, 1) == nt
+        @test size(binapprox.b_bin, 2) == nc
+        @test length(binapprox.eta) == 1
+        @test size(s.binapprox.b_bin, 1) == nt
+        @test size(s.binapprox.b_bin, 2) == nc
+        @test length(s.binapprox.eta) == 1
+        solve!(s)
+        @test s.solver_status == 2
         @test occursin("Solution found", status(s))
         @test size(binapprox.b_bin, 1) == nt
         @test size(binapprox.b_bin, 2) == nc
