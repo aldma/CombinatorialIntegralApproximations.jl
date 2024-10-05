@@ -9,11 +9,11 @@ abstract type AbstractCombinaSolver end
 #   solver_status::Int
 #   binapprox::BinApprox
 
-function setup!(s::S) where {S <: AbstractCombinaSolver}
+function pre_setup!(s::S) where {S <: AbstractCombinaSolver}
     # check and allocate solution b_bin
+    nt = s.binapprox.n_t
+    nc = s.binapprox.n_c
     if isnothing(s.binapprox.b_bin)
-        nt = s.binapprox.n_t
-        nc = s.binapprox.n_c
         s.binapprox.b_bin = zeros(nt, nc)
     else
         if size(s.binapprox.b_bin, 1) != nt
@@ -31,8 +31,22 @@ function setup!(s::S) where {S <: AbstractCombinaSolver}
             error("eta must be either nothing or a scalar.")
         end
     end
-    # set SUR status
+    return s
+end
+
+function core_setup!(s::S) where {S <: AbstractCombinaSolver}
+    return s
+end
+
+function post_setup!(s::S) where {S <: AbstractCombinaSolver}
     set_solver_status!(s, 1)
+    return s
+end
+
+function setup!(s::S) where {S <: AbstractCombinaSolver}
+    pre_setup!(s)
+    core_setup!(s)
+    post_setup!(s)
     return s
 end
 

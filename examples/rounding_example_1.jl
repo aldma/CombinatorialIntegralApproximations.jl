@@ -14,14 +14,14 @@ b_rel[:, 2] .= 1 .- b_rel_single
 t = collect(range(start = 0, stop = 240, length = nt + 1))
 
 binapprox = BinApprox(t, b_rel)
-sur = CombinaSUR(binapprox)
-status(sur)
-Combina.setup_sur!(sur)
-status(sur)
-solve!(sur)
-status(sur)
+s = CombinaSUR(binapprox)
+status(s)
+CombinatorialIntegralApproximations.setup!(s)
+status(s)
+solve!(s)
+status(s)
 
-b_bin = sur.binapprox.b_bin
+b_bin = s.binapprox.b_bin
 
 # TODO plotting function in utils
 
