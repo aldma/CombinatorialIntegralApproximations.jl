@@ -1,7 +1,7 @@
 name = "CombinatorialIntegralApproximations"
 uuid = "bb583df9-be0c-4202-8a4a-0c9563e1e548"
 authors = ["Alberto De Marchi"]
-version = "0.0.1"
+version = "0.0.2"
 
 [deps]
 HiGHS = "87dc4568-4c63-4d18-b0c0-bb2238e4078b"
