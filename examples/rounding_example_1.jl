@@ -31,3 +31,13 @@ b_plt = [b_bin; b_bin[nt, :]']
 plot(t_plt, [a_plt[:, j] for j = 1:nc], seriestype = :scatter)
 plot!(t_plt, [b_plt[:, j] for j = 1:nc], seriestype = :path, linetype = :steppost)
 savefig("rounding_example_1.pdf")
+
+s2 = CombinaMILP(binapprox)
+solve!(s2)
+b_bin2 = s2.binapprox.b_bin
+
+b_tmp = b_bin - b_bin2
+b_plt .= [b_tmp; b_tmp[nt, :]']
+plot(t_plt, [a_plt[:, j] for j = 1:nc], seriestype = :scatter)
+plot!(t_plt, [b_plt[:, j] for j = 1:nc], seriestype = :path, linetype = :steppost)
+savefig("rounding_example_diff.pdf")
