@@ -2,7 +2,6 @@
 __Solving binary approximation problems in Julia__
 
 [![Build Status](https://github.com/aldma/CombinatorialIntegralApproximations.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/aldma/CombinatorialIntegralApproximations.jl/actions/workflows/CI.yml?query=branch%3Amain)
-[![codecov.io](https://codecov.io/github/aldma/CombinatorialIntegralApproximations.jl/coverage.svg?branch=main)](https://codecov.io/github/aldma/CombinatorialIntegralApproximations.jl?branch=main)
 
 This package provides modelling tools and solution algorithms for combinatorial approximation problems arising, for instance, in mixed-integer optimal control. Implemented algorithms include:
 
