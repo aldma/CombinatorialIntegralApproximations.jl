@@ -22,9 +22,19 @@ using Test
         @test BA.cia_norm == :max_norm
     end
 
-    @testset "Test single control sos1 violated" begin
+    @testset "Test single control" begin
         t = [0, 1, 2, 3]
         b_rel = [0.1, 0.3, 0.2]
+        msg = str -> occursin("must be at least two controls", str)
+        @test_throws msg BinApprox(t, b_rel)
+    end
+
+    @testset "Test sos1 violated" begin
+        t = [0, 1, 2, 3]
+        b_rel = zeros(3, 2)
+        b_rel[1, :] .= [0.1, 0.3]
+        b_rel[2, :] .= [0.9, 0.5]
+        b_rel[3, :] .= [0.4, 0.6]
         msg = str -> occursin("sum of relaxed binary controls", str)
         @test_throws msg BinApprox(t, b_rel)
     end
@@ -53,7 +63,7 @@ using Test
     @testset "Test manual extend sos1 fulfilled" begin
         for run_idx = 1:50
             nt = Int(round(10 + rand() * (1000 - 10)))
-            nc = Int(round(1 + rand() * (100 - 1)))
+            nc = Int(round(2 + rand() * (100 - 2)))
             t = sort(rand(nt + 1) .* nt)
             b_rel = zeros(nt, nc)
             for j = 1:nt

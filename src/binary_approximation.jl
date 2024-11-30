@@ -69,9 +69,11 @@ function BinApprox(
     b_rel[clamped_up] .= 1
     clamped = sum(clamped_down) + sum(clamped_up)
 
-    # number of control intervals
+    # number of controls
     n_c = size(b_rel, 2)
-
+    if n_c == 1
+        error("There must be at least two controls: use [b_rel, 1 - b_rel]")
+    end
     # check_sos1_constraint_fulfilled
     sums = sum(b_rel, dims = 2)
     tol = clamped * binary_threshold + (n_c + 1) * eps(eltype(sums))
